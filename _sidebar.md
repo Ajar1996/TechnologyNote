@@ -16,8 +16,9 @@
 
 
 - 计算机基础
-  - [计算机网络](./docs/c-4计算机网络.md)
-
+  - [计算机网络](./docs/d-1计算机网络.md)
+  - [Linux](./docs/d-2Linux.md)
+  
 - 框架
   - [Spring](./docs/e-1Spring.md)
   - [Netty](./docs/e-2Netty.md)
