@@ -56,3 +56,7 @@ MyISAM是5.5版本以前的默认引擎。后面版本引入了InnoDB
 8. .很多时候用 exists 代替 in 是一个好的选择
 9. 索引并不是越多越好，索引固然可以提高相应的 select 的效率，但同时也降低了 insert 及 update 的效率，因为 insert 或 update 时有可能会重建索引，所以怎样建索引需要慎重考虑
 10. 任何地方都不要使用 select * from t ，用具体的字段列表代替“*”，不要返回用不到的任何字段
+
+#### 清空数据库SQL 
+
+SELECT CONCAT('truncate table ',TABLE_NAME,';') AS a FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'db_member' ;
