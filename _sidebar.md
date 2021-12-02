@@ -1,6 +1,4 @@
 
-* [备战面试](./docs/a-1备战面试.md)
-  
 * Java
 
   * [Java基础](./docs/b-1Java基础.md)
@@ -26,4 +24,7 @@
   - [RabbitMQ](./docs/f-1RabbitMQ.md)
   - [Zookeeper](./docs/f-2Zookeeper.md)
   - [Docker](./docs/f-3Docker.md)
+
+- 分布式
+  - [分布式ID](./docs/g-1分布式ID.md)
 
