@@ -1,11 +1,11 @@
 
+* 工具
+  - [正则表达式](./docs/a-1正则表达式.md)
 * Java
-
   * [Java基础](./docs/b-1Java基础.md)
   * [Java集合](./docs/b-2Java集合.md)
   * [Java多线程](./docs/b-3Java多线程.md)
   * [jvm](./docs/b-4jvm.md)
-
 * 数据库
 
   * [ElasticSearch](./docs/c-1ElasticSearch.md)
@@ -27,4 +27,5 @@
 
 - 分布式
   - [分布式ID](./docs/g-1分布式ID.md)
+  - [分布式锁](./docs/g-2分布式锁.md)
 
