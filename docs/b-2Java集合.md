@@ -4,7 +4,7 @@
 
 
 
-#### 1. Set
+### 1. Set
 
 - TreeSet:基于红黑树实现，支持有序性操作
 - HashSet:基于哈希表实现，直接快速查找但不支持有序性操作。
@@ -12,13 +12,13 @@
 
 
 
-#### 2.LIst
+### 2.LIst
 
 - ArrayList:基于动态数组实现，支持随机访问
 - Vector:和ArrayList类似，但它是线程安全的。
 - LinkedListL:基于双向链表实现，只能随机访问，但是可以快速在链表中间插入删除链表。还可以用作栈，队列和双向队列
 
-#### 3.Queue
+### 3.Queue
 
 - LinkedList:可以用来实现双向队列
 - PriorityQueue:基于堆结构实现，可以实现优先队列
@@ -31,6 +31,47 @@
 - HasMap:基于哈希表实现，底层数据结构是数据+链表/红黑树实现
 - HashTable:和HashMap类似，但是他是线程安全。
 - LinkedHashMap：继承自LinkedHashMap，使用双向链表来维护元素的顺序，顺序为插入顺序或者最近最少使用（LRU）顺序。
+
+
+
+#### 
+
+### HashMap存储结构
+
+内部包含了一个 Entry 类型的数组 table。它包含了四个字段：`key`、`value`、`hashCode`、`nextEntry`。即数组中的每个位置被当成一个桶，一个桶存放一个链表。HashMap 使用拉链法来解决冲突，同一个链表中存放哈希值和散列桶取模运算结果相同的 Entry。当链表长度大于阈值时（默认8）会转换为红黑树。
+
+![image-20211208154538416](../images/b-2Java集合/image-20211208154538416.png)
+
+
+
+### HashMap 的工作原理
+
+#### 存储对象
+
+将对象的key/value键值传给`put()`方法
+
+- 调用`hash(key)`计算出k的`hash`值，然后结合数组长度，得到数组下标
+
+- 调整数组大小，当容器内的元素大于`capacity*loadfactor`时，会扩容`resize`为2n
+
+- 插入
+
+  - 如果key的`hash`值在`HashMap`中不存在，则直接插入，若存在则发生碰撞
+
+  - 如果key的`hash`值在`HashMap`中存在
+
+    - `equals()`返回`true`，则更新`value`的值
+
+    - `equals()`返回`fasle`，则插入到链表或者红黑树中
+
+#### 获取对象
+
+将Key传给get方法
+
+- 调用`hash(key)`计算出k的`hash`值，然后结合数组长度，得到数组下标
+- 遍历链表/红黑树,`equals()`方法查找出key值对应的value值
+
+> hashCode是定位的，存储位置；equals是定性的，比较对象是否相等
 
 
 
