@@ -76,3 +76,4 @@ MyISAM是5.5版本以前的默认引擎。后面版本引入了InnoDB
 #### 清空数据库SQL 
 
 SELECT CONCAT('truncate table ',TABLE_NAME,';') AS a FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'db_member' ;
+
