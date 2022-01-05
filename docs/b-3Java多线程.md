@@ -92,11 +92,41 @@ Java6之后对锁引入了大量优化：
 
 
 
-### Synchronized底层原理
+#### 应用方法
+
+- 修饰实例方法：给当前实例对象加锁
+- 修饰静态方法：给当前类对象加锁
+- 修饰代码块：给给定对象加锁
+
+
+
+#### Synchronized底层原理
 
 当修饰代码块，会使用monitorenter和monitorexit指示同步代码块的开始和结束位置，当执行到monitorenter指令时，线程会试图获取monitor的持有权。
 
 当修饰方法时：使用ACC_SYNCHRONIZED修饰方法。证明这是一个同步方法。
+
+
+
+#### synchronized 关键字和 volatile 关键字的区别
+
+- synchronized 关键字可以修饰方法和代码块，volatile只能修饰变量
+
+- volatile保证了数据的可见性，禁止指令重排，但不能保证原子性。
+
+- volatile 关键字主要⽤于解决变量在多个线程之间的可⻅性，⽽ synchronized 关键字解决 的是多个线程之间访问资源的同步性。
+
+  
+
+#### synchronized 和 ReentrantLock的区别
+
+-  都是可重入锁
+-  synchronized 依赖于JDK，ReentrantLock是依赖于API
+-  LOCK增加了高级功能：
+   - 等待可中断
+   - 可以实现公平锁
+   - 可以实现选择性的通知
+   
 
 
 
@@ -109,27 +139,6 @@ Java虚拟机规范中定义了Java内存模型，屏蔽了底层操作系统和
 后面，线程可以把变量保存在本地内存中，而不是直接在主内存进行读写。
 
 
-
-### synchronized 关键字和 volatile 关键字的区别
-
-- synchronized 关键字可以修饰方法和代码块，volatile只能修饰变量
-
-- volatile保证了数据的可见性，禁止指令重排，但不能保证原子性。
-
-- volatile 关键字主要⽤于解决变量在多个线程之间的可⻅性，⽽ synchronized 关键字解决 的是多个线程之间访问资源的同步性。
-
-  
-
-### synchronized 和 ReentrantLock的区别
-
--  都是可重入锁
--  synchronized 依赖于JDK，ReentrantLock是依赖于API
--  LOCK增加了高级功能：
-   - 等待可中断
-   - 可以实现公平锁
-   - 可以实现选择性的通知
-   
-   
 
 ### ThreadLocal
 

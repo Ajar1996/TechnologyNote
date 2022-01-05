@@ -120,3 +120,26 @@ AOP在spring中主要表现在两个方面：提供声明式的事务管理，�
 6. ViewResolbver会根据逻辑的View查找数据的View。
 7. DispatcherServlet把返回的Model传给View(视图渲染)。
 8. 把View返回给请求者（浏览器）。
+
+
+
+### SpringBoot的优点
+
+1. 开发基于 Spring 的应用程序很容易。
+2. Spring Boot 项目所需的开发或工程时间明显减少，通常会提高整体生产力。
+3. Spring Boot 不需要编写大量样板代码、XML 配置和注释。
+4. Spring 引导应用程序可以很容易地与 Spring 生态系统集成，如 Spring JDBC、Spring ORM、Spring Data、Spring Security 等。
+5. Spring Boot 应用程序提供嵌入式 HTTP 服务器，如 Tomcat 和 Jetty，可以轻松地开发和测试 web 应用程序。
+
+
+
+### SpringBoot的自动装配原理
+
+这个是因为`@SpringBootApplication`注解的原因
+
+`SpringBootApplication`可以看作是`@Configuration`、`@EnableAutoConfiguration`、`@ComponentScan`注解的集合。
+
+- `EnableAutoConfiguration`:启动SpringBoot的自动配置机制
+- `@ComponentScan`:扫描被`@Component`(`@Servcie`,`@Controller`)注解的bean，注解默认会扫描该类下所在的包的所有的类。
+- `@Configuration`:允许在上下文中注册额外的bean或者导入其他配置类
+
