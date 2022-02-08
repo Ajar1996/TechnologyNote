@@ -16,7 +16,6 @@
 - 计算机基础
   - [计算机网络](./docs/d-1计算机网络.md)
   - [Linux](./docs/d-2Linux.md)
-
 - 框架
   - [Spring](./docs/e-1Spring.md)
   - [Netty](./docs/e-2Netty.md)
@@ -24,9 +23,10 @@
   - [RabbitMQ](./docs/f-1RabbitMQ.md)
   - [Zookeeper](./docs/f-2Zookeeper.md)
   - [Docker](./docs/f-3Docker.md)
-
 - 分布式
   - [分布式ID](./docs/g-1分布式ID.md)
   - [分布式锁](./docs/g-2分布式锁.md)
   - [分布式事务](./docs/g-3分布式事务.md)
-
+- 算法
+  - [算法-简单](./docs/h-1算法-简单.md)
+  - [算法-中等](./docs/h-2算法-中等.md)
