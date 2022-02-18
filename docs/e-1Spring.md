@@ -80,6 +80,109 @@ AOP在spring中主要表现在两个方面：提供声明式的事务管理，�
 
 
 
+Spring IOC的加载过程
+
+![image-20220216102304994](../images/e-1Spring/image-20220216102304994.png)
+
+1. `Bean`容器找到配置文件中的`Spring Bean`定义，`Spring`所管理的`Bean`使用`BeanDefiniton`来描述对象信息（如：@Lazy，@Scope，@DependsOn等）
+2. 然后会把这些信息放到一个`BeanDefinitionMap`中，这个map的key是`BeanName`，value则是`BeanDefinition`对象
+3. 然后遍历整个Map，中间通过执行`BeanFactoryPostProcessor`的后置处理器，可以对bean的定义信息进行统一的修改
+4. 在 `BeanDefiniton`和完整`BeanDefinition` 
+5. 接下来开始走Bean的生命周期，也就是实例化到销毁的过程；
+
+
+
+### Bean的生命周期
+
+![image-20220215160349532](../images/e-1Spring/image-20220215160349532.png)
+
+![img](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/72677c123f5e41b3b8498654acac8fe0~tplv-k3u1fbpfcp-watermark.awebp)
+
+1. 通过反射，选择合适的构造器把对象实例化
+2. 给容器属性赋值，判断该Bean是否实现了相关的Aware接口的方法，如果存在则填充相关资源。如实现`ApplicationContextAware`接口，通过获取`ApplicationContext`对象进而获取`Spring Bean`，实现`ApplicationEventPublisherAware`接口来实现事件发布器
+3. 然后到了初始化阶段，先执行`BeanPostProcessor`后置处理器相关子类的`before`方法，这个`BeanPostProcessor`的子类`AnnotationAwareAspectJAutoProxyCreator`是AOP实现的关键
+4. 执行init相关方法，比如`@PostConstruct`、实现了`InitializingBean`接口、定义的`init-method`方法
+5. 接着执行`BeanPostProcessor`后置处理器相关子类的`after`方法
+6. 然后就可以获取对象取使用了
+7. 销毁阶段
+   - 单例：执行`destroy()`方法
+   - 原型：返回bean给用户，剩余生命周期让用户控制
+
+
+
+#### 循环依赖
+
+```java
+@Component
+public class A {
+    // A中注入了B
+    @Autowired
+    private B b;
+}
+
+@Component
+public class B {
+    // B中注入了A
+    @Autowired
+    private A a;
+}
+
+
+@Component
+public class C {
+    // C中注入了C
+    @Autowired
+    private C c;
+}
+```
+
+
+
+Spirng Bean的创建分为两步
+
+- 当前对象实例化
+- 对象属性赋值
+
+
+
+Spring通过三级缓存来解决循环依赖，其中一级缓存为单例池（singletonObjects），二级缓存为早期曝光对象earlySingletonObjects，三级缓存为早期曝光对象工厂（singletonFactories）。
+
+
+
+当A、B对象发生循环引用时，在A完成实例化后，就使用实例化后的对象取创建一个`对象工厂`，如果A被AOP代理的话，那么获取到的就是AOP的代理对象，否则，获取到的就是A实例化后的对象。
+
+
+
+在A进行属性注入时，会去创建B，同时B又依赖于A，所以创建B的同时又会去调用getBean()来获取需要的依赖
+
+此时A就是从缓存中获取
+
+>第一步：先获取到三级缓存中的工厂；
+>
+>第二步：调用对象工工厂的getObject方法来获取到对应的对象，得到这个对象后将其注入到B中。紧接着B会走完它的生命周期流程，包括初始化、后置处理器等。
+>
+>第三步：当B创建完后，会将B再注入到A中，此时A再完成它的整个生命周期。至此，循环依赖结束！
+
+
+
+![image-20220216155600470](../images/e-1Spring/image-20220216155600470.png)
+
+
+
+#### 只用二级缓存能否解决循环依赖？
+
+如果只使用二级缓存，那就意味着在对象实例化后就要完成AOP代理，但这违背了Spring的设计原则，因为Spring设计之初就是通过`AnnotationAwareAspectJAutoProxyCreator`后置处理器来在Bean生命周期的初始化后才完成AOP代理的，而不是在实例化后立即进行AOP代理。
+
+
+
+#### 为什么要使用二级缓存？
+
+为了性能，直接从三级缓存的工厂中创建出对象，再扔到二级缓存中，避免每次都从工厂里面拿。
+
+
+
+
+
 ### 事务隔离级别
 
 1. Default:使用后端数据库默认的隔离级别，mqsql :repeatable_read  oracle:read_commited
