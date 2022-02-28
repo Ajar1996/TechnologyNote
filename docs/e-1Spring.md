@@ -80,7 +80,7 @@ AOP在spring中主要表现在两个方面：提供声明式的事务管理，�
 
 
 
-Spring IOC的加载过程
+### Spring IOC的加载过程
 
 ![image-20220216102304994](../images/e-1Spring/image-20220216102304994.png)
 
@@ -99,6 +99,7 @@ Spring IOC的加载过程
 ![img](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/72677c123f5e41b3b8498654acac8fe0~tplv-k3u1fbpfcp-watermark.awebp)
 
 1. 通过反射，选择合适的构造器把对象实例化
+1. 给对象变量赋值
 2. 给容器属性赋值，判断该Bean是否实现了相关的Aware接口的方法，如果存在则填充相关资源。如实现`ApplicationContextAware`接口，通过获取`ApplicationContext`对象进而获取`Spring Bean`，实现`ApplicationEventPublisherAware`接口来实现事件发布器
 3. 然后到了初始化阶段，先执行`BeanPostProcessor`后置处理器相关子类的`before`方法，这个`BeanPostProcessor`的子类`AnnotationAwareAspectJAutoProxyCreator`是AOP实现的关键
 4. 执行init相关方法，比如`@PostConstruct`、实现了`InitializingBean`接口、定义的`init-method`方法

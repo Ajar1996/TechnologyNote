@@ -9,14 +9,12 @@ explain执行计划中包含的信息如下：
 - id:  查询序列号
 - select_type: 查询类型
 - table: 表名或者别名
-- partitions: 匹配的分区
 - type: 访问类型
 - possible_keys: 可能用到的索引
 - key: 实际用到的索引
 - key_len: 索引长度
 - ref: 与索引比较的列
 - rows: 估算的行数
-- filtered: 按表条件筛选的行百分比
 - Extra: 额外信息
 
 
@@ -343,12 +341,6 @@ mysql> EXPLAIN SELECT * from three;
 |  1 | SIMPLE      | three | NULL       | ALL  | NULL          | NULL | NULL    | NULL |    3 |      100 | NULL  |
 +----+-------------+-------+------------+------+---------------+------+---------+------+------+----------+-------+
 ```
-
-
-
-### filtered
-
-`filtered` 这个是一个百分比的值，表里符合条件的记录数的百分比。简单点说，这个字段表示存储引擎返回的数据在经过过滤后，剩下满足条件的记录数量的比例。
 
 
 

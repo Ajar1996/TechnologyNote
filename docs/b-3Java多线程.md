@@ -140,6 +140,36 @@ Java虚拟机规范中定义了Java内存模型，屏蔽了底层操作系统和
 
 
 
+#### 原子性
+
+Java对基础数据类型的读取和赋值操作都是原子操作。线程需要先从主存读取到工作内存，再赋值，再写回主存
+
+
+
+#### 可见性
+
+ 当一个变量被volatile修饰时，那么对它的修改会立刻刷新到主存，当其它线程需要读取该变量时，会去内存中读取新值。而普通变量则不能保证这一点。
+
+
+
+#### 有序性
+
+JMM是允许编译器和处理器对指令重排序的，但是规定了as-if-serial语义，即不管怎么重排序，程序的执行结果不能改变。
+
+
+
+>instance = new Singleton()会分成三步： 
+>
+>1. 分配内存 2.初始化对象 3. 设置instance指向刚分配的内存地址 。
+>
+>其中2,3经常被重排序，你想想2在前面的话，如果另一个线程使用对象时，会认为对象不为null，那么它就可以使用对象的成员或者方法，这里就有问题了，因为它在前面的线程里并没有初始化成功
+
+
+
+
+
+
+
 ### ThreadLocal
 
 实现每个线程都有自己的专属本地变量。
@@ -182,8 +212,18 @@ ThreadLocalMap的key为弱引用，value为强引用。当Threadlocal没有被�
 #### 创建线程池的方法：
 
 - 不建议通过Excutors创建：FixedThreadPool 和 SingleThreadExecutor ： 允许请求的队列⻓度为 Integer.MAX_VALUE ，可能堆积⼤量的请求，从⽽导致 OOM。 CachedThreadPool 和 ScheduledThreadPool ： 允许创建的线程数量为 Integer.MAX_VALUE ，可能会创建⼤量线程，从⽽导致 OOM。
-
-- ThreadPoolExcuter创建
+- ThreadPoolExecuter创建
+  - `public ThreadPoolExecutor(int corePoolSize,
+                              int maximumPoolSize,
+                              long keepAliveTime,
+                              TimeUnit unit,
+                              BlockingQueue<Runnable> workQueue,
+                              ThreadFactory threadFactory,
+                              RejectedExecutionHandler handler)`，包含五个参数：核心线程数、最大线程数量、线程池维护线程所允许的空闲时间、时间单位、等待队列、拒绝策略、创建线程的工厂
+  - 如果运行的线程数少于核心线程数，则创建新的线程来处理任务，即是线程池中的其他线程是空闲的
+  - 当线程池中的线程数量大于核心线程数且小于最大线程数量时，则把请求放入等待队列中
+  - 当等待队列满时，则创建新的线程去处理。
+  - 当最大线程数量且等待队列满了，会根据拒绝策略来处理任务
 
 
 
