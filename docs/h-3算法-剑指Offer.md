@@ -422,3 +422,140 @@ public void dfs(TreeNode root) {
     dfs(root.left);
 }
 ```
+
+
+
+
+
+#### [剑指 Offer 57. 和为s的两个数字](https://leetcode-cn.com/problems/he-wei-sde-liang-ge-shu-zi-lcof/)
+
+输入一个递增排序的数组和一个数字s，在数组中查找两个数，使得它们的和正好是s。如果有多对数字的和等于s，则输出任意一对即可。
+
+
+
+>输入：nums = [2,7,11,15], target = 9
+>输出：[2,7] 或者 [7,2]
+
+
+
+思路：
+
+- 由于是排好序的，所以利用排序的性质，采用双指针
+- 定义i,J指针分别指向数组的两端。
+  - 当nums[i]和nums[j]的和大于target时，j--；
+  - 当nums[i]和nums[j]的和小于target时，i++；
+  - 碰到相等时，即返回
+
+
+
+```java
+public int[] twoSum(int[] nums, int target) {
+    int i = 0, j = nums.length - 1;
+
+    while (i != j) {
+        if ((nums[i] + nums[j]) > target) {
+            j--;
+        } else if ((nums[i] + nums[j]) < target) {
+            i++;
+        } else return new int[]{nums[i], nums[j]};
+    }
+    return new int[]{0, 0};
+}
+```
+
+
+
+#### [剑指 Offer 57 - II. 和为s的连续正数序列](https://leetcode-cn.com/problems/he-wei-sde-lian-xu-zheng-shu-xu-lie-lcof/)
+
+输入一个正整数 target ，输出所有和为 target 的连续正整数序列（至少含有两个数）。
+
+序列内的数字由小到大排列，不同序列按照首个数字从小到大排列。
+
+
+
+>输入：target = 9
+>输出：[[2,3,4],[4,5]]
+
+
+
+思路：
+
+- 采用滑动窗口算法
+- 当窗口的和小于 target 的时候，窗口的和需要增加，所以要扩大窗口，窗口的右边界向右移动
+  当窗口的和大于 target 的时候，窗口的和需要减少，所以要缩小窗口，窗口的左边界向右移动
+  当窗口的和恰好等于 target 的时候，我们需要记录此时的结果。设此时的窗口为 [i, j)[i,j)，那么我们已经找到了一个 ii 开头的序列，也是唯一一个 ii 开头的序列，接下来需要找 i+1i+1 开头的序列，所以窗口的左边界要向右移动
+
+
+
+```java
+public int[][] findContinuousSequence(int target) {
+    int i = 1, j = 1;
+    int sum = 0;
+    List<int[]> res = new ArrayList<>();
+    while (i <= target / 2) {
+        if (sum < target) {
+            sum += j;
+            j++;
+        } else if (sum > target) {
+            sum -= i;
+            i++;
+        } else {
+
+            int[] arr = new int[j - i];
+            for (int k = i; k < j; k++) {
+                arr[k - i] = k;
+            }
+            res.add(arr);
+            sum -= i;
+            i++;
+        }
+    }
+    return res.toArray(new int[res.size()][]);
+}
+```
+
+
+
+
+
+#### [剑指 Offer 58 - I. 翻转单词顺序](https://leetcode-cn.com/problems/fan-zhuan-dan-ci-shun-xu-lcof/)
+
+输入一个英文句子，翻转句子中单词的顺序，但单词内字符的顺序不变。为简单起见，标点符号和普通字母一样处理。例如输入字符串"I am a student. "，则输出"student. a am I"。
+
+
+
+>输入: "the sky is blue"
+>输出: "blue is sky the"
+
+
+
+思路：
+
+- 采用双指针，都指向字符串尾端
+
+- 找到碰到空格前的第一个字符串。然后截取加入到返回值里
+
+- 然后去掉空格
+
+- 让边界往左移，继续寻找下一个字符串
+
+  
+
+```java
+public String reverseWords(String s) {
+    s = s.trim();
+    int j = s.length() - 1, i = j;
+    StringBuffer sb = new StringBuffer();
+    while (i >= 0) {
+        while (i >= 0 && s.charAt(i) != ' ') {
+            i--;
+        }
+        sb.append(s.substring(i + 1, j + 1) + " ");
+        while (i >= 0 && s.charAt(i) == ' ') {
+            i--;
+        }
+        j = i;
+    }
+    return sb.toString().trim();
+}
+```
