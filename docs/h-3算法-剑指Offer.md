@@ -559,3 +559,217 @@ public String reverseWords(String s) {
     return sb.toString().trim();
 }
 ```
+
+
+
+#### [剑指 Offer 58 - II. 左旋转字符串](https://leetcode-cn.com/problems/zuo-xuan-zhuan-zi-fu-chuan-lcof/)
+
+字符串的左旋转操作是把字符串前面的若干个字符转移到字符串的尾部。请定义一个函数实现字符串左旋转操作的功能。比如，输入字符串"abcdefg"和数字2，该函数将返回左旋转两位得到的结果"cdefgab"。
+
+
+
+>输入: s = "abcdefg", k = 2
+>输出: "cdefgab"
+
+
+
+思路：
+
+- 新建一个StringBuilder
+- 先遍历把n+1后的字符到sb中
+- 再加入首位到n的字符
+
+
+
+```java
+public String reverseLeftWords(String s, int n) {
+    StringBuffer sb = new StringBuffer();
+    for (int i = n; i < s.length(); i++) {
+        sb.append(s.charAt(i));
+    }
+    for (int i = 0; i < n; i++) {
+        sb.append(s.charAt(i));
+    }
+    return sb.toString();
+}
+```
+
+
+
+#### [剑指 Offer 61. 扑克牌中的顺子](https://leetcode-cn.com/problems/bu-ke-pai-zhong-de-shun-zi-lcof/)
+
+从若干副扑克牌中随机抽 5 张牌，判断是不是一个顺子，即这5张牌是不是连续的。2～10为数字本身，A为1，J为11，Q为12，K为13，而大、小王为 0 ，可以看成任意数字。A 不能视为 14。
+
+
+
+>输入: [1,2,3,4,5]
+>输出: True
+
+
+
+思路：
+
+- 题意可等同于
+  - 除大小王外，所有牌 **无重复** ；
+  - 设此 55 张牌中最大的牌为 max ，最小的牌为 min（大小王除外），则需满足：max−min<5
+
+
+
+1. 集合 Set + 遍历
+   - 遍历五张牌，遇到大小王（即 00 ）直接跳过。
+   - 判别重复： 利用 Set 实现遍历判重， Set 的查找方法的时间复杂度为 O(1)O(1) ；
+   - 获取最大 / 最小的牌： 借助辅助变量 mama 和 mimi ，遍历统计即可。
+
+```java
+public boolean isStraight(int[] nums) {
+    Set<Integer> set = new HashSet<>();
+    int max = 0, min = 14;
+    for (int i : nums) {
+        if (set.contains(i)) {
+            return false;
+        }
+        if (i == 0) {
+            continue;
+        }
+        max = Math.max(max, i);
+        min = Math.min(min, i);
+        set.add(i);
+    }
+    return max - min < 5;
+}
+```
+
+
+
+2. 排序 + 遍历
+   - 先对数组执行排序。
+   - 判别重复： 排序数组中的相同元素位置相邻，因此可通过遍历数组，判断 nums[i] = nums[i + 1]nums[i]=nums[i+1] 是否成立来判重。
+   - 获取最大 / 最小的牌： 排序后，数组末位元素 nums[4]nums[4] 为最大牌；元素 nums[joker]nums[joker] 为最小牌，其中 jokerjoker 为大小王的数量。
+
+
+
+```java
+public boolean isStraight(int[] nums) {
+    Arrays.sort(nums);
+    int joker=0;
+    for (int i=0;i<4;i++){
+        if (nums[i]==0){
+            joker++;
+        }else if (nums[i]==nums[i+1]){
+            return false;
+        }
+    }
+    return nums[4]-nums[joker]<5;
+}
+```
+
+
+
+#### [剑指 Offer 62. 圆圈中最后剩下的数字](https://leetcode-cn.com/problems/yuan-quan-zhong-zui-hou-sheng-xia-de-shu-zi-lcof/)
+
+0,1,···,n-1这n个数字排成一个圆圈，从数字0开始，每次从这个圆圈里删除第m个数字（删除后从下一个数字开始计数）。求出这个圆圈里剩下的最后一个数字。
+
+例如，0、1、2、3、4这5个数字组成一个圆圈，从数字0开始每次删除第3个数字，则删除的前4个数字依次是2、0、4、1，因此最后剩下的数字是3。
+
+
+
+>输入: n = 5, m = 3
+>输出: 3
+
+
+
+思路：
+
+- 因为数据是放在数组里，所以我在数组后面加上了数组的复制，以体现是环状的
+
+  - 第一轮是 [0, 1, 2, 3, 4] ，所以是 [0, 1, 2, 3, 4] 这个数组的多个复制。这一轮 2 删除了。
+
+  - 第二轮开始时，从 3 开始，所以是 [3, 4, 0, 1] 这个数组的多个复制。这一轮 0 删除了。
+  - 第三轮开始时，从 1 开始，所以是 [1, 3, 4] 这个数组的多个复制。这一轮 4 删除了。
+  - 第四轮开始时，还是从 1 开始，所以是 [1, 3] 这个数组的多个复制。这一轮 1 删除了。
+
+- 最后剩下的数字是 3。
+
+- 然后我们从最后剩下的 3 倒着看，我们可以反向推出这个数字在之前每个轮次的位置。
+
+- 最后剩下的 3 的下标是 0。
+
+  - 第四轮反推，补上 mm 个位置，然后模上当时的数组大小 22，位置是(0 + 3) % 2 = 1。
+  - 第三轮反推，补上 mm 个位置，然后模上当时的数组大小 33，位置是(1 + 3) % 3 = 1。
+  - 第二轮反推，补上 mm 个位置，然后模上当时的数组大小 44，位置是(1 + 3) % 4 = 0。
+  - 第一轮反推，补上 mm 个位置，然后模上当时的数组大小 55，位置是(0 + 3) % 5 = 3。
+  - 所以最终剩下的数字的下标就是3。因为数组是从0开始的，所以最终的答案就是3。
+
+  
+
+  总结一下反推的过程，就是 (当前index + m) % 上一轮剩余数字的个数。
+
+  
+
+  ![image-20220302174712598](../images/h-3算法-剑指Offer/image-20220302174712598.png)
+
+递推
+
+```java
+public int lastRemaining(int n, int m) {
+    int ans=0;
+    for (int i=2;i<=n;i++){
+        ans=(ans+m)%i;
+    }
+    return ans;
+}
+```
+
+递归
+
+```java
+public int lastRemaining(int n, int m) {
+    return Remaining(n,m);
+}
+
+public int Remaining(int n,int m){
+    if (n==1){
+        return 0;
+    }
+    int index=Remaining(n-1,m);
+    return (index+m)%n;
+}
+```
+
+
+
+#### [剑指 Offer 65. 不用加减乘除做加法](https://leetcode-cn.com/problems/bu-yong-jia-jian-cheng-chu-zuo-jia-fa-lcof/)
+
+写一个函数，求两个整数之和，要求在函数体内不得使用 “+”、“-”、“*”、“/” 四则运算符号。
+
+
+
+>输入: a = 1, b = 1
+>输出: 2
+
+
+
+思路：
+
+- 采用位运算法
+
+- ^ 亦或 ----相当于 无进位的求和， 想象10进制下的模拟情况：（如:19+1=20；无进位求和就是10，而非20；因为它不管进位情况）
+
+- & 与 ----相当于求每位的进位数， 先看定义：1&1=1；1&0=0；0&0=0；即都为1的时候才为1，正好可以模拟进位数的情况,还是想象10进制下模拟情况
+
+- （9+1=10，如果是用&的思路来处理，则9+1得到的进位数为1，而不是10，所以要用<<1向左再移动一位，这样就变为10了）；
+
+  这样公式就是：（a^b) ^ ((a&b)<<1) 即：每次无进位求 + 每次得到的进位数--------我们需要不断重复这个过程，直到进位数为0为止；
+
+
+
+```java
+public int add(int a, int b) {
+    while (b != 0) {
+        int c = (a & b) << 1;
+        a ^= b;
+        b = c;
+    }
+    return a;
+}
+```
