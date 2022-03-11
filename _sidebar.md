@@ -32,4 +32,4 @@
 - 算法
   - [算法-简单](./docs/h-1算法-简单.md)
   - [算法-中等](./docs/h-2算法-中等.md)
-  - [剑指Offer](./docs/h-3算法-剑指offer.md)
+  - [剑指Offer](./docs/h-3算法-剑指Offer.md)
