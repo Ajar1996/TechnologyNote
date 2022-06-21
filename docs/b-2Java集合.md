@@ -28,7 +28,7 @@
 ### Map
 
 - TreeMap：红黑树实现
-- HasMap:基于哈希表实现，底层数据结构是数据组+链表/红黑树实现
+- HashMap:基于哈希表实现，底层数据结构是数据组+链表/红黑树实现
 - HashTable:和HashMap类似，但是他是线程安全。
 - LinkedHashMap：继承自HashMap，使用双向链表来维护元素的顺序，顺序为插入顺序或者最近最少使用（LRU）顺序。
 
@@ -94,11 +94,25 @@ Map:通过就键值对存储数据，key是无序不可以重复的。
 
 
 
-#### Fail-Fast
+### Fail-Fast和Fail-Safe
 
-modCount 用来记录 ArrayList 结构发生变化的次数。结构发生变化是指添加或者删除至少一个元素的所有操作，或者是调整内部数组的大小，仅仅只是设置元素的值不算结构发生变化。
+fail-safe和fail-fast ，是多线程并发操作集合时的一种失败处理机制。
 
-在进行序列化或者迭代等操作时，需要比较操作前后 modCount 是否改变，如果改变了需要抛出 ConcurrentModificationException。
+
+
+#### Fail-fast
+
+ 表示快速失败，在集合遍历过程中，一旦发现容器中的构发生变化，会立刻抛出ConcurrentModificationException异常，从而导致遍历失败，像这种情况。
+
+结构发生变化是指添加或者删除至少一个元素的所有操作，或者是调整内部数组的大小，仅仅只是设置元素的值不算结构发生变化。
+
+
+
+#### Fail-safe
+
+表示失败安全，也就是在这种机制下，出现集合元素的修改，不会抛出ConcurrentModificationException。
+
+原因是采用安全失败机制的集合容器，在遍历时不是直接在集合内容上访问的，而是先复制原有集合内容。
 
 
 

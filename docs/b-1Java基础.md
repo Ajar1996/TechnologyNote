@@ -89,6 +89,7 @@ StirngBuffer和都StirngBuilder都继承自AbstractStringBuilder类，是可变�
 - 抽象是类的抽象，是一种模板设计。指代的是“是不是”的关系，接口是对行为的抽象，是一种行为的规范，实则是有没有，具不具备的关系
 - 抽象类可以存在普通成员类型，而接口中只能存在public abstract 类型
 - 一个类只能继承一个抽象类，可以实现多个接口
+- 接口的字段只能是static和final类型的
 
 
 

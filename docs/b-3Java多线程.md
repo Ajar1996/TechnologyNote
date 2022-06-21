@@ -116,6 +116,8 @@ Java6之后对锁引入了大量优化：
 
 - volatile 关键字主要⽤于解决变量在多个线程之间的可⻅性，⽽ synchronized 关键字解决 的是多个线程之间访问资源的同步性。
 
+- volatile还可以用于修饰long和double变量(64位)，使得读或者写是原子操作。因为在java中对这两种变量的读是分为两次的，先读取第一个32位，再读取另一个32位，这个过程不是原子的。
+
   
 
 #### synchronized 和 ReentrantLock的区别
@@ -209,6 +211,18 @@ ThreadLocalMap的key为弱引用，value为强引用。当Threadlocal没有被�
 
 
 
+#### 线程的 sleep()方法和 yield()方法的区别
+
+- sleep()方法给其他线程运行机会时，不会考虑优先级情况，因此低优先级的线程也会有运行的机会。
+
+  而yield()方法只会给相同优先级或者更高级的线程运行机会
+
+- 线程执行sleep()方法后进入阻塞状态，yield()则是进入就绪状态
+
+- sleep()方法生命抛出IterruptedExcetpion，而yield()方法没有声明任何异常
+
+
+
 #### 创建线程池的方法：
 
 - 不建议通过Excutors创建：FixedThreadPool 和 SingleThreadExecutor ： 允许请求的队列⻓度为 Integer.MAX_VALUE ，可能堆积⼤量的请求，从⽽导致 OOM。 CachedThreadPool 和 ScheduledThreadPool ： 允许创建的线程数量为 Integer.MAX_VALUE ，可能会创建⼤量线程，从⽽导致 OOM。
@@ -297,5 +311,5 @@ public class CountDownLatchExample1 {
         threadPool.shutdown();
         System.out.println("finish");
     }
-}
+} 
 ```
