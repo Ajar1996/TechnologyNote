@@ -308,9 +308,27 @@ G1：G1 收集器可以直接对新生代和老年代一起回收。
 
 ### 相关配置参数
 
--Xms：设置堆初始值
+#### 堆设置
 
--Xmx：设置堆区最大值
+1. -**Xms**：初始堆大小
 
--Xmn：新生代内存配置
+2. -**Xmx**：最大堆大小
+
+3. -**Xmn**：新生代大小
+
+4. -**Xss**：虚拟机栈大小
+5. -**XXs:NewRatio**：设置新生代和老生代的比值。
+6. -**XX:SurviorRation**：设置Eden和Survior区比值
+7. **-XX:MetaspaceSize**、**-XX:MaxMetaspaceSize**:分别设置元空间最小大小与最大大小
+
+
+
+#### 收集器设置
+
+1. **-XX:+UseSerialGC**:设置串行收集器
+2. **-XX:+UseParallelGC**:设置并行收集器
+3. **-XX:+UseParalledlOldGC**:设置并行老年代收集器
+4. **-XX:+UseConcMarkSweepGC**:设置并发收集器
+
+
 

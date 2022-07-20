@@ -270,6 +270,24 @@ MySQL通过两阶段提交来保证redo log 和 bin log的数据是一致的
 
 
 
+###### B树和B+树的区别
+
+![image-20220712161028665](../images/c-2MySQL/image-20220712161028665.png)
+
+
+
+- B树：每一个结点既有key，也有对应的value
+
+  B+树：非叶子结点只有key，所有数据存储在叶子结点
+
+- B+树：叶子结点构成一个双向链表
+
+- B树：每次查找时不一定会到达叶子结点
+
+  B+树：需要到达叶子结点查找对应的记录
+
+  
+
 ##### Hash索引
 
 ###### 优点
@@ -295,7 +313,7 @@ MySQL通过两阶段提交来保证redo log 和 bin log的数据是一致的
 
 #### 索引为什么能提升效？
 
-- 数据索引的存储是 有序的
+- 数据索引的存储是有序的
 - 在有序的情况下, 通过索引查询一个数据是无需遍历所有记录的
 
 
@@ -308,7 +326,16 @@ MySQL通过两阶段提交来保证redo log 和 bin log的数据是一致的
 
 #### 索引失效
 
-![preview](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/996f7663e6bc4057a617fa922ffc6a44~tplv-k3u1fbpfcp-watermark.awebp)
+![preview](../images/c-2MySQL/996f7663e6bc4057a617fa922ffc6a44tplv-k3u1fbpfcp-watermark.awebp)
+
+1. 违反最左匹配原则
+2. 范围查询右边的列
+3. 模糊查询通配符%开头
+4. 对索引列进行任何操作
+5. or连接涉及到了非索引列
+6. 使用Not in/not exist
+7. MySQL认为不走索引更快
+8. 索引字段类型是字符串，不加引号
 
 
 

@@ -12,6 +12,7 @@
   * [MySQL](./docs/c-2MySQL.md)
   * [MySQL-Explain执行计划](./docs/c-2-1MySQL-Explain执行计划.md)
   * [MySQL-存储结构](./docs/c-2-2MySQL-存储结构.md)
+  * [MySQL-语法](./docs/c-2-3MySQL-语法.md)
   * [Redis](./docs/c-3Redis.md)
 
 
