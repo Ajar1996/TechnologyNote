@@ -108,6 +108,10 @@ fail-safe和fail-fast ，是多线程并发操作集合时的一种失败处理�
 
 
 
+删除元素使用Iterator迭代器删除，或者for循环从后进行遍历删除，不能使用for()普通循环或者增强for循环进行删除，
+
+
+
 #### Fail-safe
 
 表示失败安全，也就是在这种机制下，出现集合元素的修改，不会抛出ConcurrentModificationException。
