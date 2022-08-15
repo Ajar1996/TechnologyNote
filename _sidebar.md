@@ -19,6 +19,8 @@
 - 计算机基础
   - [计算机网络](./docs/d-1计算机网络.md)
   - [Linux](./docs/d-2Linux.md)
+  - [BitMap](./docs/d-3BitMap.md)
+  - [Shell脚本](./docs/d-4Sell脚本.md)
 - 框架
   - [Spring](./docs/e-1Spring.md)
   - [Netty](./docs/e-2Netty.md)
