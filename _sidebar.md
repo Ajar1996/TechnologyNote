@@ -13,6 +13,7 @@
   * [MySQL-Explain执行计划](./docs/c-2-1MySQL-Explain执行计划.md)
   * [MySQL-存储结构](./docs/c-2-2MySQL-存储结构.md)
   * [MySQL-语法](./docs/c-2-3MySQL-语法.md)
+  * [dump备份命令](./docs/c-2-4MySQL-dump备份命令.md)
   * [Redis](./docs/c-3Redis.md)
 
 
@@ -28,6 +29,7 @@
   - [RabbitMQ](./docs/f-1RabbitMQ.md)
   - [Zookeeper](./docs/f-2Zookeeper.md)
   - [Docker](./docs/f-3Docker.md)
+  - [Kunenetes](./docs/f-4Kubenets.md)
 - 分布式
   - [分布式ID](./docs/g-1分布式ID.md)
   - [分布式锁](./docs/g-2分布式锁.md)
