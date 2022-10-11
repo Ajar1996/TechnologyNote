@@ -4997,8 +4997,15 @@ NFS是一个网络文件存储系统，可以搭建一台NFS服务器，然后�
 [root@nfs ~]# more /etc/exports
 /root/data/nfs     192.168.5.0/24(rw,no_root_squash)
 
+#修改权限
+[root@nfs ~]# chmod 777 -R /root/data/nfs
+
+#加载配置：
+[root@nfs ~]# exportfs -r
+
 # 启动nfs服务
-[root@nfs ~]# systemctl restart nfs
+[root@nfs ~]# systemctl start rpcbind && systemctl enable rpcbind 
+[root@nfs ~]# systemctl restart nfs-server && systemctl enable nfs-server
 ```
 
 2）接下来，要在的每个node节点上都安装下nfs，这样的目的是为了node节点可以驱动nfs设备

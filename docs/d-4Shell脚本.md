@@ -1242,7 +1242,7 @@ sed [option] 'Addresscommand' [file ...]
 * 选项
 
   * -n:安静模式，仅显示script处理后的结果，不再默认显示模式空间中的内容 
-  * -e:<script>或--expression=<script> 以选项中指定的script来处理输入的文本文件，可以同时执行多个脚本
+  * -e:或--expression=以选项中指定的script来处理输入的文本文件，可以同时执行多个脚本
   * -f:对制定的文件直接进行sed的command操作
   * -i:直接修改原文件
   * -r:支持扩展正则表达式
